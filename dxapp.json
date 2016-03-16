@@ -149,7 +149,8 @@
       "label": "Logging Level",
       "class": "string",
       "optional": true,
-      "default": "INFO"
+      "default": "INFO",
+      "choices": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
     }
   ],
   "outputSpec": [
