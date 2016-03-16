@@ -1,0 +1,123 @@
+{
+  "name": "bwa_sambamba",
+  "title": "Alignment - BWA MEM, SAMBAMBA view, SAMBAMBA sort, SAMBABMA markduplicates",
+  "summary": "Aligns short sequence reads to a reference genome with BWA MEM and sorts and dedups BAM files with SAMBAMBA",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "categories": [
+    "Read Mapping"
+  ],
+  "inputSpec": [
+    {
+      "name": "reads_1",
+      "label": "Reads (can accept uncompressed, bz2, or gz files)",
+      "class": "array:file",
+      "optional": false
+    },
+    {
+      "name": "reads_2",
+      "label": "Right mates reads (can accept uncompressed, bz2, or gz files)",
+      "class": "array:file",
+      "optional": true
+    },
+    {
+      "name": "reference",
+      "label": "Reference genome (gzipped)",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "reference_index",
+      "label": "BWA reference genome index (must be a gzipped tar archive)",
+      "class": "file",
+      "optional": false
+    },
+    {
+      "name": "read_group_sample",
+      "label": "Read group sample (RG SM tag)",
+      "class": "string",
+      "optional": false
+    },
+    {
+      "name": "read_group_platform",
+      "label": "Read group platform (RG PL tag)",
+      "class": "string",
+      "optional": true,
+      "default": "Illumina"
+    },
+    {
+      "name": "read_group_platform_unit",
+      "label": "Read group platform unit (RG PU tag)",
+      "class": "string",
+      "optional": true,
+      "default": "FlowcellId"
+    },
+    {
+      "name": "read_group_library",
+      "label": "Read group library (RG LB tag)",
+      "class": "string",
+      "optional": true,
+      "default": "LibraryId"
+    },
+    {
+      "name": "advanced_bwa_options",
+      "label": "Advanced BWA command line options (for BWA mem)",
+      "class": "string",
+      "optional": true,
+      "default": "-M"
+    },
+    {
+      "name": "advanced_sambamba_view_options",
+      "label": "Advanced SAMBAMBA command line options (for SAMBAMBA view)",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "advanced_sambamba_sort_options",
+      "label": "Advanced SAMBAMBA command line options (for SAMBAMBA sort)",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "advanced_sambamba_markdups_options",
+      "label": "Advanced SAMBAMBA command line options (for SAMBAMBA markduplicates)",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "advanced_sambamba_flagstat_options",
+      "label": "Advanced SAMBAMBA command line options (for SAMBAMBA flagstat)",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "loglevel",
+      "label": "Logging Level",
+      "class": "string",
+      "optional": true,
+      "default": "INFO"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "output_markdups_bams",
+      "label": "sorted and dedupped BAM file(s)",
+      "class": "array:file"
+    },
+    {
+      "name": "output_cram_file_archive",
+      "label": "CRAM files for storage",
+      "class": "array:file"
+    },
+    {
+      "name": "download_quality_metrics",
+      "label": "Quality Metrics files",
+      "class": "file"
+    }
+  ],
+  "runSpec": {
+    "interpreter": "python2.7",
+    "file": "src/bwa_sambamba.py"
+  },
+  "authorizedUsers": []
+}
