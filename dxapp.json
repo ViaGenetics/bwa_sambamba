@@ -27,14 +27,64 @@
       "label": "Reference genome (gzipped)",
       "class": "file",
       "patterns": ["*.fa.gz", "*.fasta.gz"],
-      "optional": false
+      "optional": false,
+      "suggestions": [
+        {
+          "name": "GRCh37 - hs37d5 (1000 Genomes Phase II)",
+          "value": {
+            "$dnanexus_link": {
+              "project": "project-BY1v2Xj0VKgFyYv3zk4Bq125",
+              "id": "file-B6ZY7VG2J35Vfvpkj8y0KZ01"
+            }
+          }
+        },
+        {
+          "name": "ucsc - hg19",
+          "value": {
+            "$dnanexus_link": {
+              "project": "project-BY1v2Xj0VKgFyYv3zk4Bq125",
+              "id": "file-BYG23G80VKg6gz64Y5xQyb2x"
+            }
+          }
+        },
+        {
+          "name": "DNAnexus Reference Genomes",
+          "project": "project-BQpp3Y804Y0xbyG4GJPQ01xv",
+          "path": "/"
+        }
+      ]
     },
     {
       "name": "reference_index",
       "label": "BWA reference genome index (must be a gzipped tar archive)",
       "class": "file",
       "patterns": ["*.bwa-index.tar.gz"],
-      "optional": false
+      "optional": false,
+      "suggestions": [
+        {
+          "name": "GRCh37 - hs37d5 (1000 Genomes Phase II)",
+          "value": {
+            "$dnanexus_link": {
+              "project": "project-BY1v2Xj0VKgFyYv3zk4Bq125",
+              "id": "file-B6ZY4942J35xX095VZyQBk0v"
+            }
+          }
+        },
+        {
+          "name": "ucsc - hg19",
+          "value": {
+            "$dnanexus_link": {
+              "project": "project-BY1v2Xj0VKgFyYv3zk4Bq125",
+              "id": "file-BYGK0500VKg26Q75q9gq3XxJ"
+            }
+          }
+        },
+        {
+          "name": "DNAnexus Reference Genomes",
+          "project": "project-BQpp3Y804Y0xbyG4GJPQ01xv",
+          "path": "/"
+        }
+      ]
     },
     {
       "name": "read_group_sample",
