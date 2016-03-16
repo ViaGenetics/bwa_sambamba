@@ -12,24 +12,28 @@
       "name": "reads_1",
       "label": "Reads (can accept uncompressed, bz2, or gz files)",
       "class": "array:file",
+      "patterns": ["*.txt.gz", "*.fq.gz", "*.fastq.gz","*.txt", "*.fq", "*.fastq","*.txt.bz2", "*.fq.bz2", "*.fastq.bz2"],
       "optional": false
     },
     {
       "name": "reads_2",
       "label": "Right mates reads (can accept uncompressed, bz2, or gz files)",
       "class": "array:file",
+      "patterns": ["*.txt.gz", "*.fq.gz", "*.fastq.gz","*.txt", "*.fq", "*.fastq","*.txt.bz2", "*.fq.bz2", "*.fastq.bz2"],
       "optional": true
     },
     {
       "name": "reference",
       "label": "Reference genome (gzipped)",
       "class": "file",
+      "patterns": ["*.fa.gz", "*.fasta.gz"],
       "optional": false
     },
     {
       "name": "reference_index",
       "label": "BWA reference genome index (must be a gzipped tar archive)",
       "class": "file",
+      "patterns": ["*.bwa-index.tar.gz"],
       "optional": false
     },
     {
