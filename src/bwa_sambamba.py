@@ -13,6 +13,14 @@
 
 import os
 import dxpy
+import logging
+import time
+
+
+logger = logging.getLogger(__name__)
+logger.addHandler(dxpy.DXLogHandler())
+logger.propagate = False
+
 
 @dxpy.entry_point("main")
 def main(reads_1, reference, reference_index, read_group_sample,
