@@ -34,10 +34,9 @@ except ImportError:
 
 
 @dxpy.entry_point("main")
-def main(reads_1, reference, reference_index, read_group_sample,
-    loglevel, reads_2=None, read_group_platform=None,
-    read_group_platform_unit=None, read_group_library=None,
-    advanced_bwa_options=None, advanced_sambamba_view_options=None,
+def main(reads_1, reference, reference_index, read_group_sample, loglevel,
+    read_group_platform, read_group_platform_unit, read_group_library,
+    reads_2=None, advanced_bwa_options=None, advanced_sambamba_view_options=None,
     advanced_sambamba_sort_options=None, advanced_sambamba_markdups_options=None,
     advanced_sambamba_flagstat_options=None):
 
@@ -60,6 +59,23 @@ def main(reads_1, reference, reference_index, read_group_sample,
     :returns: This will return an dx object with output generated. This is
         actually taken care of by dxpy client libraries.
     """
+
+    # Set up string variables that are not required
+
+    if not advanced_bwa_options:
+        advanced_bwa_options = ""
+
+    if not advanced_sambamba_view_options:
+        advanced_sambamba_view_options = ""
+
+    if not advanced_sambamba_sort_options:
+        advanced_sambamba_sort_options = ""
+
+    if not advanced_sambamba_markdups_options:
+        advanced_sambamba_markdups_options = ""
+
+    if not advanced_sambamba_flagstat_options:
+        advanced_sambamba_flagstat_options = ""
 
     # Set up execution environment
 
