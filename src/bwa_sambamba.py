@@ -159,7 +159,7 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
 
     dx_download_inputs_cmd = "dx-download-all-inputs --parallel"
     download_inputs = dx_exec.execute_command(dx_download_inputs_cmd)
-    dx_exec.check_execution_syscode(download_inputs)
+    dx_exec.check_execution_syscode(download_inputs, "Download input files")
 
     # The following line(s) are the body of the applet that
     # executes the bioinformatics processes
