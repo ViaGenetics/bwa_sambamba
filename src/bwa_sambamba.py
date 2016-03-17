@@ -100,16 +100,59 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     ]
 
     for temp_directory in temp_directories:
-        create_dir = dx_exec.execute_command("mkdir -p {0}".format(temp_directory))
-        dx_exec.check_execution_syscode(create_dir, "Created: {0}".format(temp_directory))
-        chmod_dir = dx_exec.execute_command("chmod 777 -R {0}".format(temp_directory))
-        dx_exec.check_execution_syscode(chmod_dir, "Modified: {0}".format(temp_directory))
+        create_dir = dx_exec.execute_command("mkdir -p {0}".format(
+            temp_directory))
+        dx_exec.check_execution_syscode(create_dir, "Created: {0}".format(
+            temp_directory))
+        chmod_dir = dx_exec.execute_command("chmod 777 -R {0}".format(
+            temp_directory))
+        dx_exec.check_execution_syscode(chmod_dir, "Modified: {0}".format(
+            temp_directory))
 
     # The following line(s) initialize your data object inputs on the platform
     # into dxpy.DXDataObject instances that you can start using immediately.
 
     reference_filename = dxpy.DXFile(reference).describe()["name"]
     reference_index_filename = dxpy.DXFile(reference_index).describe()['name']
+
+    # Will prepare an array that has each pair of sequencing reads (read_1 and
+    # read_2) to pass to BWA to align
+
+    reads_to_align = []
+
+    for index, file_object in enumerate(reads_1):
+
+        # DNAnexus has this funky behavior when you have > 9 files, it creates
+        # a folder in/parameter/08/file - this resolves that issue
+        if len(reads_1) > 9 and index < 10:
+            index = "0{0}".format(index)
+
+        reads_1_filename = dxpy.DXFile(file_object).describe()['name']
+        if reads_2:
+            reads_2_filename = dxpy.DXFile(reads_2[index]).describe()['name']
+
+
+        if dx_utils.check_compression(reads_1_filename) == '.bz2':
+            reads_1_filename = "'<bunzip2 -c in/reads_1/{0}/{1}'".format(index,
+                reads_1_filename)
+        else:
+            reads_1_filename = "in/reads_1/{0}/{1}".format(index,
+                reads_1_filename)
+
+        if reads_2:
+            if dxhelp.check_compression(reads_2_filename) == ".bz2":
+                reads_2_filename = "'<bunzip2 -c in/reads_2/{0}/{1}'".format(
+                    index, reads_2_filename)
+            else:
+                reads_2_filename = "in/reads_2/{0}/{1}".format(index,
+                    reads_2_filename)
+
+        if reads_2_filename:
+            read_files = "{0} {1}".format(reads_1_filename, reads_2_filename)
+        else:
+            read_files = "{0}".format(reads_1_filename)
+
+        reads_to_align.append(read_files)
 
     # The following line(s) download your file inputs to the local file system
     # using variable names for the filenames.
