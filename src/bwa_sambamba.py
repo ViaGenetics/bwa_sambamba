@@ -177,6 +177,36 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     unzip_reference_genome = dx_exec.execute_command(unzip_reference_genome_cmd)
     dx_exec.check_execution_syscode(untar_reference_index, "Unzip reference genome")
 
+    # FASTQ to BAM conversion
+
+    read_group = "@RG\\tID:{0}-{1}\\tSM:{0}\\tCN:Genesis\\tPL:{2}\\tLB:{3}\\tPU:{1}".format(
+        read_group_sample, read_group_platform_unit, read_group_platform,
+        read_group_library)
+    bwa_mem_cmd = "bwa mem {0} -t {1} -R \"{2}\" {3}".format(
+        advanced_bwa_options, cpus, read_group, reference_filename)
+    sambamba_view_cmd = "sambamba view {0} -f bam -l 0 -S -t {1} /dev/stdin".format(
+        advanced_sambamba_view_options, cpus)
+    sambamba_sort_cmd = "sambamba sort {0} -t {1} -m {2}M /dev/stdin".format(
+        advanced_sambamba_sort_options, cpus, max_ram/cpus)
+    bam_files = []
+
+    for index, reads in enumerate(reads_to_align):
+        aligned_bam = "tmp/alignment/{0}.{1}.bam".format(read_group_sample, index)
+        alignment_cmd = "{0} {1} | {2} | {3} -o {4}".format(
+            bwa_mem_cmd, reads, sambamba_view_cmd, sambamba_sort_cmd, aligned_bam)
+
+        alignment = dx_exec.execute_command(alignment_cmd)
+        dx_exec.check_execution_syscode(alignment, "Alignemnt: {0}".format(
+            alignment_cmd))
+
+        bam_files.append(aligned_bam)
+
+    # Clean up FASTQ files to make space on HDDs (especially useful for WGS)
+
+    clean_up_fastq_cmd = "rm -rf in/reads_*/"
+    clean_up_fastq = dx_exec.execute_command(clean_up_fastq_cmd)
+    dx_exec.check_execution_syscode(clean_up_fastq, "FASTQ removed")
+
     # The following line(s) use the Python bindings to upload your file outputs
     # after you have created them on the local file system.  It assumes that you
     # have used the output field name for the filename for each output, but you
