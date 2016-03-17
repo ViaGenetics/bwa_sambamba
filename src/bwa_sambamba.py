@@ -229,6 +229,26 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
         # set of processes
         bam_files = [sorted_bam]
 
+    # Mark duplicates in BAM file
+
+    sorted_bam = bam_files[0]
+    markdup_bam = "tmp/markdup/{0}.markdups.bam".format(read_group_sample)
+    sambamba_markdup_cmd = "sambamba markdup {0} -p -t {1} {2} {3}".format(
+        advanced_sambamba_markdups_options, cpus, sorted_bam, markdup_bam)
+    sambamba_markdup = dx_exec.execute_command(sambamba_markdup_cmd)
+    dx_exec.check_execution_syscode(sambamba_markdup, "Mark Duplicates")
+
+    sambamba_index_cmd = "sambamba index -p -t {0} {1}".format(cpus, markdup_bam)
+    sambamba_index = dx_exec.execute_command(sambamba_index_cmd)
+    dx_exec.check_execution_syscode(sambamba_index, "Index BAM file")
+
+    # Clean up temporary BAM files - this will save space on HDDs (useful for WGS)
+
+    tmp_bam_directories = ["tmp/alignment/", "tmp/merged/", "tmp/sorted/"]
+    for tmp_bam_directory in tmp_bam_directories:
+        clean_up_bam = dx_exec.execute_command("rm -rf {0}".format(tmp_bam_directory))
+        dx_exec.check_execution_syscode(clean_up_bam, "Clean up BAM")
+
     # The following line(s) use the Python bindings to upload your file outputs
     # after you have created them on the local file system.  It assumes that you
     # have used the output field name for the filename for each output, but you
