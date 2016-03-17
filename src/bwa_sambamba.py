@@ -246,8 +246,18 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
 
     tmp_bam_directories = ["tmp/alignment/", "tmp/merged/", "tmp/sorted/"]
     for tmp_bam_directory in tmp_bam_directories:
-        clean_up_bam = dx_exec.execute_command("rm -rf {0}".format(tmp_bam_directory))
+        clean_up_bam = dx_exec.execute_command("rm -rf {0}".format(
+            tmp_bam_directory))
         dx_exec.check_execution_syscode(clean_up_bam, "Clean up BAM")
+
+    # FlagStat BAM file - get some prelim alignment metrics
+
+    flagstat_output = "out/download_quality_metrics/{0}.stats.flagstat".format(
+        read_group_sample)
+    sambamba_flagstat_cmd = 'sambamba flagstat {0} -p -t {1} {2} > {3}'.format(
+        advanced_sambamba_flagstat_options, cpus, markdup_bam, flagstat_output)
+    sambamba_flagstat = dx_exec.execute_command(sambamba_flagstat_cmd)
+    dx_exec.check_execution_syscode(sambamba_flagstat, "flagstat BAM file")
 
     # The following line(s) use the Python bindings to upload your file outputs
     # after you have created them on the local file system.  It assumes that you
