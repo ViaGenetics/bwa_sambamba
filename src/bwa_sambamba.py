@@ -129,7 +129,7 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
 
         reads_1_filename = dxpy.DXFile(file_object).describe()['name']
         if reads_2:
-            reads_2_filename = dxpy.DXFile(reads_2[index]).describe()['name']
+            reads_2_filename = dxpy.DXFile(reads_2[index]).describe()["name"]
 
 
         if dx_utils.check_compression(reads_1_filename) == '.bz2':
