@@ -113,7 +113,7 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     # into dxpy.DXDataObject instances that you can start using immediately.
 
     reference_filename = dxpy.DXFile(reference).describe()["name"]
-    reference_index_filename = dxpy.DXFile(reference_index).describe()['name']
+    reference_index_filename = dxpy.DXFile(reference_index).describe()["name"]
 
     # Will prepare an array that has each pair of sequencing reads (read_1 and
     # read_2) to pass to BWA to align
@@ -127,7 +127,7 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
         if len(reads_1) > 9 and index < 10:
             index = "0{0}".format(index)
 
-        reads_1_filename = dxpy.DXFile(file_object).describe()['name']
+        reads_1_filename = dxpy.DXFile(file_object).describe()["name"]
         if reads_2:
             reads_2_filename = dxpy.DXFile(reads_2[index]).describe()["name"]
 
