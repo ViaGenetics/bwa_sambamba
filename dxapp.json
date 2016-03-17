@@ -189,6 +189,13 @@
        "instanceType": "mem1_ssd1_x8"
      }
    },
+   "executionPolicy": {
+     "restartOn": {
+       "ExecutionError": 1,
+       "AppInternalError": 1
+     },
+     "maxRestarts": 2
+   },
   },
   "authorizedUsers": []
 }
