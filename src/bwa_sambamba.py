@@ -26,8 +26,7 @@ try:
     from dx_applet_utilities import (
         common_job_operations as dx_utils,
         manage_command_execution as dx_exec,
-        prepare_job_resources as dx_resources
-    )
+        prepare_job_resources as dx_resources)
 except ImportError:
     logger.error("Make sure to add the dx_applet_utilities to execDepends in dxapp.json!")
     sys.exit(1)
