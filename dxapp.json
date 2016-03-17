@@ -172,7 +172,9 @@
   ],
   "runSpec": {
     "interpreter": "python2.7",
-    "file": "src/bwa_sambamba.py"
+    "file": "src/bwa_sambamba.py",
+    "distribution": "Ubuntu",
+    "release": "14.04",
   },
   "authorizedUsers": []
 }
