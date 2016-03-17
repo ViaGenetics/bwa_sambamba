@@ -291,11 +291,10 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     # that you have created variables to represent your output with
     # the same name as your output fields.
 
-    output = {}
-    output["output_markdups_bams"] = [dxpy.dxlink(item) for item in output_markdups_bams]
-    output["output_cram_file_archive"] = [dxpy.dxlink(item) for item in output_cram_file_archive]
-    output["download_quality_metrics"] = dxpy.dxlink(download_quality_metrics)
-
-    return output
+    upload_output_object = dx_utils.load_json_from_file("job_output.json")
+    return dx_utils.prepare_job_output(
+        dx_output_object=upload_output_object,
+        must_be_array=False
+    )
 
 dxpy.run()
