@@ -196,6 +196,11 @@
      },
      "maxRestarts": 2
    },
+   "timeoutPolicy": {
+     "main": {
+       "hours": 15
+     }
+   }
   },
   "authorizedUsers": []
 }
