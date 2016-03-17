@@ -140,7 +140,7 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
                 reads_1_filename)
 
         if reads_2:
-            if dxhelp.check_compression(reads_2_filename) == ".bz2":
+            if dx_utils.check_compression(reads_2_filename) == ".bz2":
                 reads_2_filename = "'<bunzip2 -c in/reads_2/{0}/{1}'".format(
                     index, reads_2_filename)
             else:
