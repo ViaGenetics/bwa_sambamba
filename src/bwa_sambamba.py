@@ -104,11 +104,8 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     # The following line(s) initialize your data object inputs on the platform
     # into dxpy.DXDataObject instances that you can start using immediately.
 
-    reads_1 = [dxpy.DXFile(item) for item in reads_1]
-    if reads_2 is not None:
-        reads_2 = [dxpy.DXFile(item) for item in reads_2]
-    reference = dxpy.DXFile(reference)
-    reference_index = dxpy.DXFile(reference_index)
+    reference_filename = dxpy.DXFile(reference).describe()["name"]
+    reference_index_filename = dxpy.DXFile(reference_index).describe()['name']
 
     # The following line(s) download your file inputs to the local file system
     # using variable names for the filenames.
