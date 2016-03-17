@@ -157,14 +157,9 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     # The following line(s) download your file inputs to the local file system
     # using variable names for the filenames.
 
-    dxpy.download_dxfile(reference.get_id(), "reference")
-
-    dxpy.download_dxfile(reference_index.get_id(), "reference_index")
-    for i, f in enumerate(reads_1):
-        dxpy.download_dxfile(f.get_id(), "reads_1-" + str(i))
-    if reads_2 is not None:
-        for i, f in enumerate(reads_2):
-            dxpy.download_dxfile(f.get_id(), "reads_2-" + str(i))
+    dx_download_inputs_cmd = "dx-download-all-inputs --parallel"
+    download_inputs = dx_exec.execute_command(dx_download_inputs_cmd)
+    dx_exec.check_execution_syscode(download_inputs)
 
     # Fill in your application code here.
 
