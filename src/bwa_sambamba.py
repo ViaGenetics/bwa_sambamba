@@ -161,7 +161,21 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     download_inputs = dx_exec.execute_command(dx_download_inputs_cmd)
     dx_exec.check_execution_syscode(download_inputs)
 
-    # Fill in your application code here.
+    # The following line(s) are the body of the applet that
+    # executes the bioinformatics processes
+
+    # Prepare refernce genome for alignment
+
+    reference_filename = "genome/genome.fa"
+    untar_reference_index_cmd = "tar -xzvf {0} -C genome".format(
+        reference_index_filename)
+    unzip_reference_genome_cmd = "gzip -dc {0} > genome/genome.fa".format(
+        reference_filename)
+
+    untar_reference_index = dx_exec.execute_command(untar_reference_index_cmd)
+    dx_exec.check_execution_syscode(untar_reference_index, "Untar reference Index")
+    unzip_reference_genome = dx_exec.execute_command(unzip_reference_genome_cmd)
+    dx_exec.check_execution_syscode(untar_reference_index, "Unzip reference genome")
 
     # The following line(s) use the Python bindings to upload your file outputs
     # after you have created them on the local file system.  It assumes that you
