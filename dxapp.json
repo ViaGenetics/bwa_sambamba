@@ -202,5 +202,11 @@
      }
    }
   },
+  "access": {
+    "network": ["*"]
+  },
+  "developers": [
+    "MGonz2015"
+  ],
   "authorizedUsers": []
 }
