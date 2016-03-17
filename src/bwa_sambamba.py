@@ -198,7 +198,7 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
             bwa_mem_cmd, reads, sambamba_view_cmd, sambamba_sort_cmd,
             aligned_bam)
 
-        alignment = dx_exec.execute_command(alignment_cmd)
+        alignment = dx_exec.execute_command(alignment_cmd, debug=True)
         dx_exec.check_execution_syscode(alignment, "Alignemnt of reads {0}".format(
             index))
 
@@ -237,7 +237,7 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     markdup_bam = "tmp/markdup/{0}.markdups.bam".format(read_group_sample)
     sambamba_markdup_cmd = "sambamba markdup {0} -p -t {1} {2} {3}".format(
         advanced_sambamba_markdups_options, cpus, sorted_bam, markdup_bam)
-    sambamba_markdup = dx_exec.execute_command(sambamba_markdup_cmd)
+    sambamba_markdup = dx_exec.execute_command(sambamba_markdup_cmd, debug=True)
     dx_exec.check_execution_syscode(sambamba_markdup, "Mark Duplicates")
 
     sambamba_index_cmd = "sambamba index -p -t {0} {1}".format(cpus, markdup_bam)
