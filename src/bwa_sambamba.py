@@ -112,8 +112,10 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     # The following line(s) initialize your data object inputs on the platform
     # into dxpy.DXDataObject instances that you can start using immediately.
 
-    reference_filename = dxpy.DXFile(reference).describe()["name"]
-    reference_index_filename = dxpy.DXFile(reference_index).describe()["name"]
+    reference_filename = "in/reference/{0}".format(
+        dxpy.DXFile(reference).describe()["name"])
+    reference_index_filename = "in/reference_index/{0}".format(
+        dxpy.DXFile(reference_index).describe()["name"])
 
     # Will prepare an array that has each pair of sequencing reads (read_1 and
     # read_2) to pass to BWA to align
