@@ -193,7 +193,8 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     for index, reads in enumerate(reads_to_align):
         aligned_bam = "tmp/alignment/{0}.{1}.bam".format(read_group_sample, index)
         alignment_cmd = "{0} {1} | {2} | {3} -o {4}".format(
-            bwa_mem_cmd, reads, sambamba_view_cmd, sambamba_sort_cmd, aligned_bam)
+            bwa_mem_cmd, reads, sambamba_view_cmd, sambamba_sort_cmd,
+            aligned_bam)
 
         alignment = dx_exec.execute_command(alignment_cmd)
         dx_exec.check_execution_syscode(alignment, "Alignemnt: {0}".format(
@@ -206,6 +207,27 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     clean_up_fastq_cmd = "rm -rf in/reads_*/"
     clean_up_fastq = dx_exec.execute_command(clean_up_fastq_cmd)
     dx_exec.check_execution_syscode(clean_up_fastq, "FASTQ removed")
+
+    # Merge BAM files if more than one pair of reads exist
+
+    if len(bam_files) > 1:
+        merged_bam = merged_bam = "tmp/merged/{0}.merged.bam".format(
+            read_group_sample)
+        sambamba_merge_cmd = "sambamba merge -t {0} {1} {2}".format(
+            cpus, merged_bam, " ".join(bam_files))
+        sambamba_merge = dx_exec.execute_command(sambamba_merge_cmd)
+        dx_exec.check_execution_syscode(sambamba_merge, "Merge BAM")
+
+        sorted_bam = "tmp/sorted/sorted.{0}.bam".format(read_group_sample)
+        sambamba_sort_merged_cmd = "sambamba sort {0} -t {1} -m {2}M {3} -o {4}".format(
+            advanced_sambamba_sort_options, cpus, max_ram/cpus, merged_bam,
+            sorted_bam)
+        sambamba_sort_merge = dx_exec.execute_command(sambamba_sort_merged_cmd)
+        dx_exec.check_execution_syscode(sambamba_sort_merge, "Sort merged BAM")
+
+        # Make sure to reset the bam_files array, it will be used for the next
+        # set of processes
+        bam_files = [sorted_bam]
 
     # The following line(s) use the Python bindings to upload your file outputs
     # after you have created them on the local file system.  It assumes that you
