@@ -199,8 +199,8 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
             aligned_bam)
 
         alignment = dx_exec.execute_command(alignment_cmd)
-        dx_exec.check_execution_syscode(alignment, "Alignemnt: {0}".format(
-            alignment_cmd))
+        dx_exec.check_execution_syscode(alignment, "Alignemnt of reads {0}".format(
+            index))
 
         bam_files.append(aligned_bam)
 
