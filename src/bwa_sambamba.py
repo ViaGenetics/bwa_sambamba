@@ -168,11 +168,11 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
 
     # Prepare refernce genome for alignment
 
-    reference_filename = "genome/genome.fa"
     untar_reference_index_cmd = "tar -xzvf {0} -C genome".format(
         reference_index_filename)
     unzip_reference_genome_cmd = "gzip -dc {0} > genome/genome.fa".format(
         reference_filename)
+    reference_filename = "genome/genome.fa"
 
     untar_reference_index = dx_exec.execute_command(untar_reference_index_cmd)
     dx_exec.check_execution_syscode(untar_reference_index, "Untar reference Index")
