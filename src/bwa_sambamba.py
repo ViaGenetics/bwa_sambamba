@@ -283,7 +283,9 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     # have used the output field name for the filename for each output, but you
     # can change that behavior to suit your needs.
 
-    download_quality_metrics = dxpy.upload_local_file("download_quality_metrics")
+    dx_upload_outputs_cmd = "dx-upload-all-outputs --parallel"
+    download_outputs = dx_exec.execute_command(dx_upload_outputs_cmd)
+    dx_exec.check_execution_syscode(download_outputs, "Upload outputs")
 
     # The following line fills in some basic dummy output and assumes
     # that you have created variables to represent your output with
