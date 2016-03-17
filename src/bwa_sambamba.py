@@ -76,6 +76,11 @@ def main(reads_1, reference, reference_index, read_group_sample, loglevel,
     if not advanced_sambamba_flagstat_options:
         advanced_sambamba_flagstat_options = ""
 
+    if reads_2:
+        if len(reads_1) != len(reads_2):
+            logger.error("# of files for reads_1 and reads_2 does not match!")
+            sys.exit(1)
+
     # Set up execution environment
 
     logger.setLevel(loglevel)
